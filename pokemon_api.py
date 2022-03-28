@@ -39,7 +39,7 @@ def get_pokemon_list(limit=20,offset=0):
     logging.info(f"get_pokemon_list - limit={limit}, offset={offset}")
     pokemon_list=[]
     try:
-        url= f'{POKEMON_API_URL}/pokemon/?limit={limit}&offset={offset}'
+        url= f"{POKEMON_API_URL}/pokemon/?limit={limit}&offset={offset}"
         response_json=get_request(url)
         if response_json is not None:
             pokemon_list=response_json.get("results",[])
@@ -50,5 +50,17 @@ def get_pokemon_list(limit=20,offset=0):
         return pokemon_list
 
 
-
-    
+# Función que permite obtener los datos de un elemento específico a partir de su nombre (pokemons, species, egg groups, etc)
+def get_element_data_by_name(route="/",name=""):
+    logging.info(f"get_element_data_by_name - route={route}, name {name}")
+    element=dict()
+    try:
+        url=f"{POKEMON_API_URL}/{route}/{name}"
+        response_json=get_request(url)
+        if response_json is not None:
+            element=response_json
+    except Exception as error:
+        logging.exception(f"get_element_data_by_name Exception {error}")
+    finally:
+        logging.info(f"get_element_data_by_name - return {len(element)} fields")
+        return element

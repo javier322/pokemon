@@ -1,7 +1,7 @@
 # En este archivo se realiza el llamado a las funciones necesarias para responder las preguntas planteadas
 from email.policy import default
 import logging
-from question_functions import get_pokemons_qty_by_filter
+from question_functions import get_pokemon_egg_group_qty, get_pokemons_qty_by_filter
 from decouple import config
 ENV_MODE=config("ENV_MODE",default="")
 
@@ -15,6 +15,12 @@ def answer_question_one():
 
     print(f"La cantidad de pokemones que poseen \"at\" en su nombre e incluyen 2 letras \"a\" es de {pokemon_qty}\n")
 
+def answer_question_two():
+    logging.info("answer_question_two")
+
+    pokemon_egg_group_qty=get_pokemon_egg_group_qty("raichu")
+
+    print(f"La cantidad de especies con las cuales puede procrear raichu corresponde a {pokemon_egg_group_qty}")
 
 if __name__ == "__main__":
     print(ENV_MODE)
@@ -29,3 +35,4 @@ if __name__ == "__main__":
 
     
     answer_question_one()
+    answer_question_two()
