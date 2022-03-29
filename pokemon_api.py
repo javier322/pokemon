@@ -1,11 +1,14 @@
 
-# En este archivo se declaran las funciones necesarias para interactuar con la API REST de pókemon
+"""
+En este archivo se declaran las funciones necesarias para interactuar con la API REST de pokémon
+"""
+
 
 import requests
 import logging
 from decouple import config
 
-POKEMON_API_URL=config("POKEMON_API_URL",default="")
+POKEMON_API_URL=config("POKEMON_API_URL",default="https://pokeapi.co/api/v2")
 
 
 # Función genérica para llevar a cabo peticiones REST de tipo GET.
@@ -64,3 +67,19 @@ def get_element_data_by_name(route="/",name=""):
     finally:
         logging.info(f"get_element_data_by_name - return {len(element)} fields")
         return element
+
+# Función que permite obtener la lista de pokemones por tipo
+def get_pokemon_list_by_type(type):
+    logging.info(f"get_pokemon_list_by_type - type {type}")
+    pokemon_list=[]
+    try:
+        url=f"{POKEMON_API_URL}/type/{type}"
+        response_json=get_request(url)
+
+        if response_json is not None:
+            pokemon_list=response_json.get("pokemon",[])
+    except Exception as error:
+        logging.exception(f"get_pokemon_list_by_type Exception {error}")
+    finally:
+        logging.info(f"get_pokemon_list_by_type - return {len(pokemon_list)} elements")
+        return pokemon_list
