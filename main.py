@@ -74,7 +74,7 @@ def write_answers_to_file(answer_one,answer_two,answer_three):
 
 def write_answers_to_console(answer_one,answer_two,answer_three):
 
-    logging.info(write_answers_to_console)
+    logging.info("write_answers_to_console")
     try:
         print("\n")
         print(answer_one)
